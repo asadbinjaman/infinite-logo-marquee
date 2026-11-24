@@ -1,0 +1,108 @@
+/* Version 1.0.2 */
+.iclm-marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* Optional subtle edge fade - remove mask-image lines if you want hard edges */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+/* Vertical variants: explicit height constraint, vertical mask, column layout */
+.iclm-marquee-wrapper[data-direction="up"],
+.iclm-marquee-wrapper[data-direction="down"] {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+    flex-direction: column;
+    justify-content: flex-start;
+    height: var(--iclm-wrapper-height, 200px);
+    max-height: var(--iclm-wrapper-height, 200px);
+}
+
+.iclm-marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: var(--iclm-gap, 48px);
+    padding-right: var(--iclm-gap, 48px);
+    will-change: transform;
+}
+
+/* Vertical track: full width, centered items, bottom padding */
+.iclm-marquee-wrapper[data-direction="up"] .iclm-marquee-track,
+.iclm-marquee-wrapper[data-direction="down"] .iclm-marquee-track {
+    flex-direction: column;
+    align-items: center;
+    padding-right: 0;
+    padding-bottom: var(--iclm-gap, 48px);
+    width: 100%;
+    height: max-content;
+}
+
+/* Base animation properties (shared) */
+.iclm-marquee-wrapper.iclm-is-ready .iclm-marquee-track {
+    animation-duration: var(--iclm-speed, 30s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+/* Direction-specific animations bound to explicit direction classes */
+.iclm-marquee-wrapper.iclm-is-ready.iclm-dir-left .iclm-marquee-track {
+    animation-name: iclm-scroll-left;
+}
+
+.iclm-marquee-wrapper.iclm-is-ready.iclm-dir-right .iclm-marquee-track {
+    animation-name: iclm-scroll-right;
+}
+
+.iclm-marquee-wrapper.iclm-is-ready.iclm-dir-up .iclm-marquee-track {
+    animation-name: iclm-scroll-up;
+}
+
+.iclm-marquee-wrapper.iclm-is-ready.iclm-dir-down .iclm-marquee-track {
+    animation-name: iclm-scroll-down;
+}
+
+.iclm-marquee-wrapper[data-pause="true"]:hover .iclm-marquee-track {
+    animation-play-state: paused;
+}
+
+.iclm-logo-item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iclm-logo-item img {
+    height: var(--iclm-height, 50px) !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Horizontal animations */
+@keyframes iclm-scroll-left {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes iclm-scroll-right {
+    0% { transform: translate3d(-50%, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+/* Vertical animations */
+@keyframes iclm-scroll-up {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(0, -50%, 0); }
+}
+
+@keyframes iclm-scroll-down {
+    0% { transform: translate3d(0, -50%, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
